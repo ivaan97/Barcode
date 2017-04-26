@@ -1,28 +1,39 @@
-
-
-CREATE TABLE Tisch(
-	tischNr int NOT NULL,
-	kapazitaet int,
-	primary key(tischNr)
-);
-
-CREATE TABLE Maturant(
-	mEmail varchar(50) not null,
-	password varchar(20),
-	vorname varchar(50),
-	nachname varchar(50),
-	primary key (mEmail)
-);
-
-CREATE TABLE Kunde(
-	barcode int not null,
-	vorname varchar(50),
-	nachname varchar(50),
-	alterK int,
-	inK boolean default false,
+CREATE TABLE Tisch (
 	tischNr int,
-	mEmail varchar(50),
-	primary key (barcode),
-	foreign key (tischNr) references Tisch (tischNr),
-	foreign key (mEmail) references Maturant (mEmail)
+	kapazitaet int,
+	PRIMARY KEY(tischNr)
 );
+
+CREATE TABLE Event (
+	eID int NOT NULL AUTO_INCREMENT,
+	eName varchar(255),
+	eDatum date,
+	eOrt varchar(255),
+	eVeranstalter varchar(255),
+	PRIMARY KEY(eID)
+);
+
+CREATE TABLE Benutzer (
+	bEmail varchar(255),
+	vorname varchar(255),
+	nachname varchar(255),
+	passwort varchar(255),
+	typ int,
+	PRIMARY KEY(bEmail)
+);
+
+CREATE TABLE Gast (
+	barcode int,
+	vorname varchar(255),
+	nachname varchar(255),
+	geburtsDatum date,
+	gIN boolean,
+	eID int,
+	tischNr int,
+	bEmail varchar(255),
+	PRIMARY KEY (barcode),
+	FOREIGN KEY (eID) REFERENCES Event(eID),
+	FOREIGN KEY (tischNr) REFERENCES Tisch(tischNr),
+	FOREIGN KEY (bEmail) REFERENCES Benutzer(bEmail)
+);
+	
